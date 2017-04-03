@@ -1,5 +1,6 @@
 CFLAGS_EXT	= -g
 LDFLAGS_EXT	=
+CPPFLAGS = -D_GNU_SOURCE
 LIBS_EXT	=
 
 #{ OS specific part
