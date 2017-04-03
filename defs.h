@@ -1,5 +1,5 @@
 #define VERSION_MAJOR	0
-#define VERSION_MINOR	0
+#define VERSION_MINOR	0.1
 
 /* socket read buffer size */
 #define SOCKBUFR_SIZE	1024

@@ -8,6 +8,7 @@ LIBS_EXT	=
 CFLAGS_OS = -Wall
 LDFLAGS_OS =
 LIBS_OS =
+LEX	= flex
 
 ## SunOS 4.1
 #CC	= gcc
@@ -58,7 +59,7 @@ lex.yy.c:
 
 TAR	= tar
 TARTAR	= modemu.tar
-TARTARSRC = modemu-0.0.lsm README COPYING modemu.1 \
+TARTARSRC = modemu-0.0.1.lsm README COPYING TODO modemu.1 \
 	Makefile depend defs.h modemu.c \
 	cmdlex.l cmdlex.h  sockbuf.c sockbuf.h  ttybuf.c ttybuf.h \
 	stty.c stty.h  telopt.c telopt.h  sock.c sock.h  atcmd.c atcmd.h \

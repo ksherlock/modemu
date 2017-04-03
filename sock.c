@@ -169,15 +169,14 @@ sockDial(void)
 	    /* SOCKS requires this check method (ref: What_SOCKS_expects) */
 	    if (FD_ISSET(sock.fd, &wfds)) {
 		if (connect(sock.fd, (struct sockaddr *)&sa, sizeof(sa)) < 0
-		    && errno == EISCONN) {
-		    tmp = 0; ioctl(sock.fd, FIONBIO, &tmp); /* blocking i/o */
-		    sock.alive = 1;
-		    return 0;
-		} else {
+		    && errno != EISCONN) {
 		    perror("connect()-2");
 		    sockShutdown();
 		    return 1;
 		}
+		tmp = 0; ioctl(sock.fd, FIONBIO, &tmp); /* blocking i/o */
+		sock.alive = 1;
+		return 0;
 	    }
 
 	    gettimeofday(&t, NULL);

@@ -20,14 +20,15 @@ sockBufRead(void)
 
     l = recv(sock.fd, sockBufR.buf, sizeof(sockBufR.buf), 0);
     if (l <= 0) {
-	if (l == 0) {
-	    sock.alive = 0;
+	sock.alive = 0;
+	if (l == 0)
 	    verboseOut(VERB_MISC, "Connection closed by peer.\r\n");
-	    return;
-	}
-	perror("recv()");
-	sockShutdown();
-	exit(1);
+	else
+	    /* PPP link down or something to reach here. */
+	    /* v0.0 exited, which comm progs don't expect. */
+	    /* now just NO CARRIERs. Thanks >> Rod May */
+	    perror("recv()");
+	return;
     }
     sockBufR.ptr = sockBufR.buf;
     sockBufR.end = sockBufR.buf + l;
@@ -45,14 +46,12 @@ sockBufWrite(void)
     if (wl == 0) return;
     l = send(sock.fd, sockBufW.top, wl, 0);
     if (l <= 0) {
-	if (l == 0) {
-	    sock.alive = 0;
+	sock.alive = 0;
+	if (l == 0)
 	    verboseOut(VERB_MISC, "Connection closed by peer.\r\n");
-	    return;
-	}
-	perror("send()");
-	sockShutdown();
-	exit(1);
+	else
+	    perror("send()");
+	return;
     } else if (l < wl) {
 	sockBufW.top += l;
 	/*return 1;*/ /* needs retry */
