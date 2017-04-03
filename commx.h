@@ -1,2 +1,2 @@
 void
-commxForkExec(const char *cmd, char c10, char c01);
+commxForkExec(const char *cmd, const char *devname);

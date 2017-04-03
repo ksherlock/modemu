@@ -48,13 +48,11 @@ forkExec(char *s)
 }
 
 void
-commxForkExec(const char *cmd, char c10, char c01)
+commxForkExec(const char *cmd, const char *devName)
 {
-    char c[3];
-    char *s;
+    char *s = NULL;
 
-    c[0] = c10; c[1] = c01; c[2] = 0;
-    s = strdup(cmd);
-    sprintf(s, cmd, c); /*'%s' -> 'p1' or sth*/
+    asprintf(&s, cmd, devName); /*'%s' -> '/dev/pts/...' */
     forkExec(s);
+    free(s);
 }

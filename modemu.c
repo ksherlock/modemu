@@ -402,40 +402,21 @@ openPtyMaster(const char *dev)
 {
     int fd;
 
-    fd = open(dev, O_RDWR);
+    if (dev) {
+    	fd = open(dev, O_RDWR);
+    	if (fd < 0) {
+	    perror("open");
+	    exit(1);
+    	}
+    	return fd;
+    }
+
+    fd = posix_openpt(O_RDWR | O_NOCTTY);
     if (fd < 0) {
-	fprintf(stderr, "Pty open error.\n");
+	perror("posix_openpt");
 	exit(1);
     }
-    return fd;
-}
-
-#define PTY00 "/dev/ptyXX"
-#define PTY10 "pqrs"
-#define PTY01 "0123456789abcdef"
-
-static int
-getPtyMaster(char *tty10, char *tty01)
-{
-    char *p10;
-    char *p01;
-    static char dev[] = PTY00;
-    int fd;
-
-    for (p10 = PTY10; *p10 != '\0'; p10++) {
-	dev[8] = *p10;
-	for (p01 = PTY01; *p01 != '\0'; p01++) {
-	    dev[9] = *p01;
-	    fd = open(dev, O_RDWR);
-	    if (fd >= 0) {
-		*tty10 = *p10;
-		*tty01 = *p01;
-		return fd;
-	    }
-	}
-    }
-    fprintf(stderr,"Ran out of pty.\n");
-    exit(1);
+    grantpt(fd);
     return fd;
 }
 
@@ -449,19 +430,18 @@ main(int argc, const char *argv[])
 #endif
     cmdargParse(argv);
     switch (cmdarg.ttymode) {
-	char c10, c01;
     case CA_STDINOUT:
 	tty.rfd = 0;
 	tty.wfd = 1;
 	setTty();
 	break;
     case CA_SHOWDEV:
-	tty.rfd = tty.wfd = getPtyMaster(&c10, &c01);
-	printf("%c%c\n", c10, c01);
+	tty.rfd = tty.wfd = openPtyMaster(NULL);
+	printf("%s\n", ptsname(tty.rfd));
 	break;
     case CA_COMMX:
-	tty.rfd = tty.wfd = getPtyMaster(&c10, &c01);
-	commxForkExec(cmdarg.commx, c10, c01);
+	tty.rfd = tty.wfd = openPtyMaster(NULL);
+	commxForkExec(cmdarg.commx, ptsname(tty.rfd));
 	break;
     case CA_DEVGIVEN:
 	tty.rfd = tty.wfd = openPtyMaster(cmdarg.dev);
