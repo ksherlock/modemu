@@ -1,0 +1,2 @@
+#!/bin/sh
+exec modemu -e "at%b0=3%b1=3" -c "minicom -o -p %s" 
