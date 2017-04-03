@@ -2,10 +2,10 @@
 #define VERSION_MINOR	0.1
 
 /* socket read buffer size */
-#define SOCKBUFR_SIZE	1024
+#define SOCKBUFR_SIZE	4096
 
 /* tty read buffer size */
-#define TTYBUFR_SIZE	1024
+#define TTYBUFR_SIZE	4096
 
 /* line (!char) mode line-length */
 #define LINEBUF_SIZE	256
