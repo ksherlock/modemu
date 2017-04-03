@@ -417,6 +417,7 @@ openPtyMaster(const char *dev)
 	exit(1);
     }
     grantpt(fd);
+    unlockpt(fd);
     return fd;
 }
 
