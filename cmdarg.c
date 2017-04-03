@@ -1,4 +1,6 @@
 #include <stdio.h>	/*stderr*/
+#include <stdlib.h>	/*exit*/
+
 #include "cmdarg.h"	/*cmdarg*/
 #include "defs.h"	/*VERSION_...*/
 

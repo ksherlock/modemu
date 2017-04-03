@@ -1,6 +1,7 @@
 #include <stdio.h>	/*stderr,(perror)*/
 #include <unistd.h>	/*(read,write)*/
 #include <sys/time.h>	/*->ttybuf.h (timeval)*/
+#include <stdlib.h> /*exit*/
 
 #include "defs.h"	/*->ttybuf.h (uchar,SOCKBUFR_SIZE,TTYBUFR_SIZE)*/
 #include "ttybuf.h"	/*sockBufR,sockBufW*/

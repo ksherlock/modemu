@@ -1,6 +1,7 @@
 #ifdef TERMNET
 #include <termnet.h>
 #endif
+#include <stdio.h>	/*perror*/
 #include <sys/types.h>	/*->socket.h (u_short etc.)*/
 #include <sys/socket.h>	/*AF_INET*/
 #include <netinet/in.h>	/*sockaddr_in*/

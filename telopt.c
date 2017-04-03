@@ -1,5 +1,6 @@
 #include <stdio.h>	/*stderr,(fprintf)*/
 #include <sys/time.h>	/*->ttybuf.h (timeval)*/
+#include <stdlib.h>	/*exit*/
 #define TELCMDS /*to use strings defined in telnet.h*/
 #define TELOPTS
 #include <arpa/telnet.h>/*IAC,DO,DONT,...*/

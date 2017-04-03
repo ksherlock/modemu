@@ -4,6 +4,8 @@
 #include <sys/time.h>	/*fd_set,FD_ZERO*/
 #include <fcntl.h>	/*O_RDWR*/
 #include <errno.h>	/*EINTR*/
+#include <string.h>	/*strlen*/
+#include <stdlib.h>	/*exit*/
 
 #include "defs.h"	/*uchar*/
 #include "sock.h"	/*sock*/

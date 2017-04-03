@@ -3,6 +3,8 @@
 #include <unistd.h>	/*(fork,execv)*/
 #include <string.h>	/*(strdup)*/
 #include <sys/wait.h>	/*WNOHANG*/
+#include <stdlib.h>     /*exit*/
+
 #include "commx.h"	/*(commxForkExec)*/
 #include "verbose.h"	/*VERB_MISC*/
 
