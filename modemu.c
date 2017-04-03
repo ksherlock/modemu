@@ -27,7 +27,7 @@ sockReadLoop(void)
 {
     static enum {
 	SRL_NORM, SRL_IAC, SRL_CMD,
-	SRL_SB, SRL_SBC, SRL_SBS, SRL_SBI
+	SRL_SB, SRL_SBC, SRL_SBS, SRL_SBI, SRL_CR
     } state /*= SRL_NORM*/;
     static int cmd;
     static int opt;
@@ -79,6 +79,10 @@ sockReadLoop(void)
 		telOptSBHandle(opt);
 		state = SRL_NORM;
 		break;
+	    case SRL_CR:
+		state = SRL_NORM;
+		if (c != 0x00) putTty1(c);
+		break;
 	    default:
 		if (c == IAC) {
 		    state = SRL_IAC;
@@ -86,6 +90,7 @@ sockReadLoop(void)
 		    /*putTty1(telOpt.binrecv? c : (c & 0x7f));*/
 		    putTty1(c);
 		}
+		if (c == '\r') state = SRL_CR;
 	    }
 	}
     }
@@ -171,6 +176,7 @@ static void
 ttyReadLoop(void)
 {
     int c;
+    static int crhack=0;
 
     if (atcmd.pr) {
 	while ((c = getTty1()) >= 0) {
@@ -180,8 +186,10 @@ ttyReadLoop(void)
     } else if (telOpt.sgasend) {
 	while ((c = getTty1()) >= 0) {
 	    /*if (telOpt.binsend)*/ {
+		if (crhack && c != CHAR_LF) putSock1(0);
 		if (c == IAC) putSock1(IAC);
 		putSock1(c);
+		crhack = (c == CHAR_CR);
 	    } /*else putSock1(c & 0x7f);*/
 	    escSeqHandle(c);
 	}
