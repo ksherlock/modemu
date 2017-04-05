@@ -81,7 +81,7 @@ Sample Usage
 
   Invoke with "-c" option,
 
-  > modemu -c "xc -l tty%s"
+  > modemu -c "xc -l %s"
 
   you see XC runs. Go to the terminal mode and input
 

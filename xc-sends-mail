@@ -2,7 +2,7 @@
 
 # Modemu + xc sample script: "Xc talks SMTP and sends you a mail."
 # Usage:
-#     modemu -c 'xc -l tty%s -s xc-sends-mail'
+#     modemu -c 'xc -l %s -s xc-sends-mail'
 
 assign HOST eq `hostname`
 assign TOADR eq $LOGNAME
