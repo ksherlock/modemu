@@ -1,3 +1,5 @@
 *.o
 lex.yy.c
 modemu
+
+autom4te.cache
